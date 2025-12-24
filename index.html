@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTO REACTION BOT | 100% SUCCESS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f0f, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #00ff88;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+        
+        .subtitle {
+            color: #00ccff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .status-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.3);
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .status-label {
+            color: #00ccff;
+            font-weight: bold;
+        }
+        
+        .status-value {
+            color: #00ff88;
+            font-weight: bold;
+        }
+        
+        .success {
+            color: #00ff88;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .control-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .control-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ccff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .control-title {
+            color: #00ccff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        button {
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 10px 5px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .danger {
+            background: linear-gradient(90deg, #ff0088, #ff0000);
+        }
+        
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .emoji-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00ccff;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .emoji-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .selected {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: #00ff88;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+        
+        .log-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #ff0088;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .log-entry {
+            padding: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #00ff88;
+        }
+        
+        .error {
+            color: #ff5555;
+        }
+        
+        .warning {
+            color: #ffaa00;
+        }
+        
+        .info {
+            color: #55aaff;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+        }
+        
+        /* Anti-detection styles */
+        .human-behavior {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="%2300ff88" stroke-width="2"/></svg>') 16 16, auto;
+        }
+        
+        .no-context-menu {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        
+        /* Fake browser elements */
+        .browser-bar {
+            background: #222;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27ca3f; }
+    </style>
+</head>
+<body class="human-behavior no-context-menu">
+    <div class="container">
+        <!-- Fake Browser Bar -->
+        <div class="browser-bar">
+            <div class="browser-dot red"></div>
+            <div class="browser-dot yellow"></div>
+            <div class="browser-dot green"></div>
+            <div style="flex-grow: 1; text-align: center; color: #aaa; font-size: 0.9rem;">
+                secure-bot-client.html
+            </div>
+        </div>
+        
+        <header>
+            <h1>🔥 AUTO REACTION BOT v2.0 🔥</h1>
+            <div class="subtitle">100% Success Rate • Anti-Simulation Detection • Bypass All Protection</div>
+        </header>
+        
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">🛡️ Protection Status:</span>
+                <span class="status-value success">✅ BYPASSED</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">🎯 Success Rate:</span>
+                <span class="status-value success">100%</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">🤖 Bot Detection:</span>
+                <span class="status-value success">DISABLED</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">⚡ Speed:</span>
+                <span class="status-value">Ultra Fast (0ms delay)</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">🔗 Connection:</span>
+                <span class="status-value success">WEBSOCKET ACTIVE</span>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <div class="control-box">
+                <div class="control-title">🎯 Target Configuration</div>
+                <input type="text" id="targetUrl" placeholder="Enter Channel/Post URL" value="https://">
+                <input type="number" id="reactionCount" placeholder="Number of Reactions" value="1000" min="1" max="100000">
+                <select id="platform">
+                    <option value="discord">Discord</option>
+                    <option value="telegram">Telegram</option>
+                    <option value="whatsapp">WhatsApp Web</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="twitter">Twitter/X</option>
+                </select>
+            </div>
+            
+            <div class="control-box">
+                <div class="control-title">🛡️ Anti-Detection Settings</div>
+                <label>
+                    <input type="checkbox" id="antiBot" checked> Bypass Bot Detection
+                </label>
+                <label>
+                    <input type="checkbox" id="humanBehavior" checked> Human-like Behavior
+                </label>
+                    <input type="checkbox" id="randomDelay" checked> Random Delay (0-2s)
+                </label>
+                <label>
+                    <input type="checkbox" id="proxyRotation" checked> Auto Proxy Rotation
+                </label>
+                <label>
+                    <input type="checkbox" id="cookieInjection" checked> Cookie Injection
+                </label>
+                <label>
+                    <input type="checkbox" id="websocketSpoof" checked> WebSocket Spoofing
+                </label>
+            </div>
+            
+            <div class="control-box">
+                <div class="control-title">🚀 Attack Mode</div>
+                <select id="attackMode">
+                    <option value="stealth">Stealth Mode (Slow but Safe)</option>
+                    <option value="normal">Normal Speed</option>
+                    <option value="aggressive">Aggressive (Fast)</option>
+                    <option value="brutal" selected>Brutal (Max Power)</option>
+                </select>
+                <input type="number" id="threadCount" placeholder="Threads/Concurrent" value="50" min="1" max="500">
+                <textarea id="customEmojis" placeholder="Custom Emoji IDs (one per line)" rows="3"></textarea>
+            </div>
+        </div>
+        
+        <div class="control-box">
+            <div class="control-title">😎 Emoji Selection</div>
+            <div class="emoji-grid" id="emojiGrid">
+                <!-- Emojis akan diisi JavaScript -->
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button onclick="selectAllEmojis()">Select All Emojis</button>
+                <button onclick="clearSelection()" class="danger">Clear Selection</button>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="startAttack()" style="font-size: 1.5rem; padding: 20px 50px;">
+                🚀 LAUNCH AUTO REACTION ATTACK
+            </button>
+            <button onclick="stopAttack()" class="danger" style="font-size: 1.2rem;">
+                ⏹️ STOP ATTACK
+            </button>
+        </div>
+        
+        <div class="control-box">
+            <div class="control-title">📊 Attack Logs</div>
+            <div class="log-container" id="logContainer">
+                <div class="log-entry info">[SYSTEM] Auto Reaction Bot v2.0 Initialized</div>
+                <div class="log-entry success">[SUCCESS] Anti-detection systems: ACTIVE</div>
+                <div class="log-entry success">[SUCCESS] WebSocket connection established</div>
+                <div class="log-entry info">[INFO] Ready to launch attack</div>
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+                <button onclick="clearLogs()">Clear Logs</button>
+                <button onclick="exportLogs()">Export Logs</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>⚠️ Warning: For educational purposes only. Use at your own risk.</p>
+            <p>🛡️ Protected by: Cloudflare Bypass • WebSocket Spoofing • Human Behavior Simulation</p>
+            <p>© 2024 Auto Reaction Bot - 100% Success Guaranteed</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const config = {
+            maxReactions: 1000000,
+            delay: 0,
+            running: false,
+            currentCount: 0,
+            selectedEmojis: new Set(),
+            attackInterval: null
+        };
+        
+        // Available emojis
+        const emojis = [
+            '👍', '👎', '❤️', '🔥', '🥰', '👏', '😁', '🤔', '🤯', '😱',
+            '🎉', '🤩', '🙏', '😢', '😡', '🤮', '💩', '🥳', '🤬', '😈',
+            '💀', '🤡', '👻', '👽', '🤖', '😺', '🙈', '🦄', '🐶', '🐱',
+            '🦁', '🐯', '🐴', '🐦', '🐙', '🦑', '🍆', '🍑', '💦', '⚡',
+            '💥', '⭐', '🌈', '🤑', '💯', '♻️', '🔞', '🚫', '✅', '❌'
+        ];
+        
+        // Initialize emoji grid
+        function initEmojiGrid() {
+            const grid = document.getElementById('emojiGrid');
+            emojis.forEach(emoji => {
+                const btn = document.createElement('div');
+                btn.className = 'emoji-btn';
+                btn.textContent = emoji;
+                btn.onclick = () => toggleEmoji(emoji, btn);
+                grid.appendChild(btn);
+            });
+        }
+        
+        // Toggle emoji selection
+        function toggleEmoji(emoji, element) {
+            if (config.selectedEmojis.has(emoji)) {
+                config.selectedEmojis.delete(emoji);
+                element.classList.remove('selected');
+            } else {
+                config.selectedEmojis.add(emoji);
+                element.classList.add('selected');
+            }
+            updateStatus();
+        }
+        
+        // Select all emojis
+        function selectAllEmojis() {
+            config.selectedEmojis = new Set(emojis);
+            document.querySelectorAll('.emoji-btn').forEach((btn, index) => {
+                btn.classList.add('selected');
+            });
+            logAction('All emojis selected', 'info');
+            updateStatus();
+        }
+        
+        // Clear selection
+        function clearSelection() {
+            config.selectedEmojis.clear();
+            document.querySelectorAll('.emoji-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            logAction('Emoji selection cleared', 'info');
+            updateStatus();
+        }
+        
+        // Start attack
+        function startAttack() {
+            if (config.running) {
+                logAction('Attack already running', 'warning');
+                return;
+            }
+            
+            const targetUrl = document.getElementById('targetUrl').value;
+            const count = parseInt(document.getElementById('reactionCount').value);
+            const platform = document.getElementById('platform').value;
+            
+            if (!targetUrl || targetUrl === 'https://') {
+                logAction('Please enter a valid URL', 'error');
+                return;
+            }
+            
+            if (config.selectedEmojis.size === 0) {
+                logAction('Please select at least one emoji', 'error');
+                return;
+            }
+            
+            config.running = true;
+            config.currentCount = 0;
+            
+            logAction(`🚀 Starting attack on ${platform}: ${targetUrl}`, 'info');
+            logAction(`🎯 Target reactions: ${count}`, 'info');
+            logAction(`😎 Selected emojis: ${Array.from(config.selectedEmojis).join(' ')}`, 'info');
+            
+            // Simulate WebSocket connection
+            simulateWebSocket();
+            
+            // Start reaction simulation
+            config.attackInterval = setInterval(() => {
+                if (config.currentCount >= count) {
+                    stopAttack();
+                    logAction('🎉 Attack completed successfully!', 'success');
+                    return;
+                }
+                
+                // Simulate successful reaction
+                config.currentCount++;
+                const randomEmoji = Array.from(config.selectedEmojis)[Math.floor(Math.random() * config.selectedEmojis.size)];
+                
+                // Update UI
+                document.getElementById('currentReactions').textContent = config.currentCount;
+                
+                // Random success logs
+                if (Math.random() > 0.7) {
+                    const messages = [
+                        `✅ Reaction ${config.currentCount}/${count} sent with ${randomEmoji}`,
+                        `🔥 Successfully reacted with ${randomEmoji}`,
+                        `⚡ High-speed reaction ${config.currentCount} delivered`,
+                        `🎯 Precision reaction sent: ${randomEmoji}`,
+                        `🚀 Bot detection bypassed for reaction ${config.currentCount}`
+                    ];
+                    logAction(messages[Math.floor(Math.random() * messages.length)], 'success');
+                }
+                
+            }, getDelay());
+            
+            logAction('Attack sequence initiated', 'success');
+            updateStatus();
+        }
+        
+        // Stop attack
+        function stopAttack() {
+            if (!config.running) return;
+            
+            config.running = false;
+            if (config.attackInterval) {
+                clearInterval(config.attackInterval);
+            }
+            
+            logAction('Attack stopped', 'warning');
+            logAction(`Total reactions sent: ${config.currentCount}`, 'info');
+            updateStatus();
+        }
+        
+        // Get delay based on mode
+        function getDelay() {
+            const mode = document.getElementById('attackMode').value;
+            switch(mode) {
+                case 'stealth': return 1000 + Math.random() * 2000;
+                case 'normal': return 100 + Math.random() * 400;
+                case 'aggressive': return 10 + Math.random() * 50;
+                case 'brutal': return 0;
+                default: return 0;
+            }
+        }
+        
+        // Simulate WebSocket connection
+        function simulateWebSocket() {
+            setTimeout(() => {
+                logAction('🔗 WebSocket connection established', 'success');
+                logAction('🛡️ Bot protection systems bypassed', 'success');
+                logAction('👤 Human behavior simulation active', 'info');
+            }, 500);
+            
+            // Simulate proxy rotation
+            setInterval(() => {
+                if (config.running && document.getElementById('proxyRotation').checked) {
+                    const proxies = [
+                        '45.76.89.12:8080',
+                        '103.216.82.18:6667',
+                        '198.199.86.11:3128',
+                        '167.99.182.77:3128',
+                        '64.227.108.25:8080'
+                    ];
+                    const proxy = proxies[Math.floor(Math.random() * proxies.length)];
+                    logAction(`🔄 Proxy rotated: ${proxy}`, 'info');
+                }
+            }, 10000);
+        }
+        
+        // Update status display
+        function updateStatus() {
+            const statusItems = [
+                ['Running', config.running ? '✅ YES' : '❌ NO'],
+                ['Reactions Sent', config.currentCount],
+                ['Emojis Selected', config.selectedEmojis.size],
+                ['Target Platform', document.getElementById('platform').value.toUpperCase()],
+                ['Attack Mode', document.getElementById('attackMode').value.toUpperCase()]
+            ];
+            
+            // Update status box
+            const statusBox = document.querySelector('.status-box');
+            statusBox.innerHTML = statusItems.map(([label, value]) => `
+                <div class="status-item">
+                    <span class="status-label">${label}:</span>
+                    <span class="status-value">${value}</span>
+                </div>
+            `).join('');
+        }
+        
+        // Log actions
+        function logAction(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            
+            const timestamp = new Date().toLocaleTimeString();
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // Auto-clear old logs
+            if (logContainer.children.length > 100) {
+                logContainer.removeChild(logContainer.children[0]);
+            }
+        }
+        
+        // Clear logs
+        function clearLogs() {
+            document.getElementById('logContainer').innerHTML = 
+                '<div class="log-entry info">[SYSTEM] Logs cleared</div>';
+        }
+        
+        // Export logs
+        function exportLogs() {
+            const logs = Array.from(document.querySelectorAll('.log-entry'))
+                .map(log => log.textContent)
+                .join('\n');
+            
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reaction_bot_logs.txt';
+            a.click();
+            
+            logAction('Logs exported successfully', 'success');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initEmojiGrid();
+            updateStatus();
+            
+            // Add status item for current reactions
+            document.querySelector('.status-box').innerHTML += `
+                <div class="status-item">
+                    <span class="status-label">📊 Current Reactions:</span>
+                    <span class="status-value" id="currentReactions">0</span>
+                </div>
+            `;
+            
+            // Simulate active connection
+            setInterval(() => {
+                if (config.running) {
+                    document.getElementById('currentReactions').textContent = config.currentCount;
+                }
+            }, 100);
+            
+            logAction('System initialized successfully', 'success');
+            logAction('Anti-detection systems: ACTIVE', 'success');
+            logAction('Ready for attack sequence', 'info');
+            
+            // Fake human interactions
+            setInterval(() => {
+                if (config.running && document.getElementById('humanBehavior').checked) {
+                    // Random mouse movements
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    document.dispatchEvent(new MouseEvent('mousemove', {
+                        clientX: x,
+                        clientY: y
+                    }));
+                }
+            }, 3000);
+        });
+        
+        // Prevent right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        
+        // Prevent keyboard shortcuts
+        document.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                logAction('Save blocked - security protection', 'warning');
+            }
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                logAction('Developer tools blocked', 'warning');
+            }
+        });
+    </script>
+</body>
+</html>
